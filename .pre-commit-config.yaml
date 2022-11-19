@@ -1,0 +1,39 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: .pyenv
+      - id: end-of-file-fixer
+        exclude: .pyenv
+      - id: check-ast
+        exclude: .pyenv
+      - id: fix-byte-order-marker
+        exclude: .pyenv
+      - id: check-case-conflict
+        exclude: .pyenv
+      - id: detect-private-key
+        exclude: .pyenv
+      - id: check-executables-have-shebangs
+        exclude: .pyenv
+      - id: check-yaml
+        exclude: .pyenv
+      - id: check-json
+        exclude: .pyenv
+      - id: check-toml
+        exclude: .pyenv
+      - id: pretty-format-json
+        exclude: .pyenv
+        args: [--autofix]
+      - id: mixed-line-ending
+        exclude: .pyenv
+      - id: check-added-large-files
+        exclude: .pyenv
+      - id: check-merge-conflict
+        exclude: .pyenv
+      - id: debug-statements
+        exclude: .pyenv
+      - id: requirements-txt-fixer
+        exclude: .pyenv

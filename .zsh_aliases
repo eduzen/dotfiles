@@ -1,0 +1,27 @@
+alias ,j="just --justfile ~/.global.justfile --working-directory ."
+alias ,cleanpython="just clean-python"
+alias ,cleanpyc="find . -name '*.pyc' -exec rm -f {} \;"
+alias ,cleanpyco="find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete"
+alias ,cleanpycache="find . -regex '^.*\(__pycache__\|\.py[co]\)$' -delete"
+alias ,freedanglingimg="docker rmi -f $(docker images -f "dangling=true" -q)"
+
+alias ,mountcompleted="sudo mount -v -t cifs //pi4.lan/completed ${COMPLETED} -o user=${USER},password=${SAMBAPASS},domain=lan,uid=1000,gid=1000"
+alias ,mountdownloads="sudo mount -v -t cifs //pi4.lan/downloads ${DOWNLOADS} -o user=${USER},password=${SAMBAPASS},domain=lan,uid=1000,gid=1000"
+alias ,mountblackhole="sudo mount -v -t cifs //pi4.lan/blackhole ${DOWNLOADS}/blackhole -o user=${USER},password=${SAMBAPASS},domain=lan,uid=1000,gid=1000"
+
+alias ,vim='docker run -it --rm -v $(pwd):/src --workdir /src eduzen/docker-vim:latest'
+alias ,lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker:latest'
+alias ,lazydocker='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker:latest'
+alias ,portainer="docker volume create portainer_data;docker run --rm -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce"
+
+alias ,traefik="dco -f ~/dockers/traefik/docker-compose.yml"
+alias ,samba='dco -f ~/dockers/samba/docker-compose.yml'
+alias ,traefik='dco -f ~/dockers/traefik/docker-compose.yml'
+alias ,jelly='dco -f ~/dockers/jellyfin/docker-compose.yml'
+alias ,qb='dco -f ~/dockers/qbittorrent/docker-compose.yml'
+alias ,radarr='dco -f ~/dockers/radarr/docker-compose.yml'
+alias ,sonarr='dco -f ~/dockers/sonarr/docker-compose.yml'
+alias ,bazarr='dco -f ~/dockers/bazarr/docker-compose.yml'
+alias ,pihole='dco -f ~/dockers/pihole/docker-compose.yml'
+alias ,unifi='dco -f ~/dockers/unifi-controller/docker-compose.yml'
+alias ,jackett='dco -f ~/dockers/jackett/docker-compose.yml'
