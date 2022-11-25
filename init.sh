@@ -44,11 +44,19 @@ if [[ ${platform} == 'linux' ]]; then
     openssh-server \
     openssl \
     bzip2 \
+    p7zip-full \
+    p7zip-rar \
     ncurses-base \
     fail2ban \
     ufw \
     httpie
 fi
+
+if [[ ${platform} == 'mac' ]]; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew install p7zip
+fi
+
 
 echo
 read -p "Do you want to configure ohmyzsh? " -n 1 -r
@@ -139,4 +147,16 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install
+fi
+
+
+
+echo
+read -p "Do you want to configure bitwarden? " -n 1 -r
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    curl -L -o "$HOME/Downloads/bw.zip" "https://vault.bitwarden.com/download/?app=cli&platform=macos"
+    chmod +x /tmp/wb
+    mv /tmp/wb
 fi

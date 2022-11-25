@@ -20,6 +20,7 @@ plugins=(
   kubectl
   extract
   ripgrep
+  gcloud
   docker
   docker-compose
   zsh-autosuggestions
@@ -29,13 +30,14 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Enviroment Variables
-[ -f "$HOME"/.zsh_env ] && source "$HOME"/.zsh_env
-[ -f "$HOME"/.zshenv ] && source "$HOME"/.zshenv
 [ -f "$HOME"/.cargo/env ] && source "$HOME"/.cargo/env
+[ -f "$HOME"/.zsh_env ] && source "$HOME"/.zsh_env
+[ -f "$HOME"/.zsh_work_env ] && source "$HOME"/.zsh_work_env
 
 # Aliases
 [ -f "$HOME"/.bash_aliases ] && source "$HOME"/.bash_aliases
 [ -f "$HOME"/.zsh_aliases ] && source "$HOME"/.zsh_aliases
+[ -f "$HOME"/.zsh_work_aliases ] && source "$HOME"/.zsh_work_aliases
 [ -f "$HOME"/.zshaliases ] && source "$HOME"/.zshaliases
 
 [ -f "$HOME"/.fzf.zsh ] && source "$HOME"/.fzf.zsh
@@ -50,4 +52,6 @@ if [[ -f $PYENV_ROOT ]]; then
     export PATH="$PYENV_ROOT/bin:$PATH"
 if
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]] then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if

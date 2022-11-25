@@ -1,13 +1,8 @@
-export PATH=$PATH:/usr/local/go/bin
-
-# source $HOME/.poetry/env
-# export PATH="$HOME/.poetry/bin:$PATH"
-
 export PYTHONBREAKPOINT=ipdb.set_trace
 export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 
-export EMAIL="eduardo.a.enriquez@gmail.com"
+export EMAIL="eduzen@eduzen.com.ar"
 export DOMAIN="eduzen.duckdns.org"
 export STORAGE=/home/eduzen/storage
 export TMP=/home/eduzen/storage/tmp
