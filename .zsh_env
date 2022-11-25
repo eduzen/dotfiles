@@ -3,18 +3,18 @@ export PYTHONUNBUFFERED=1
 export PYTHONDONTWRITEBYTECODE=1
 
 export EMAIL="eduzen@eduzen.com.ar"
-export DOMAIN="eduzen.duckdns.org"
-export STORAGE=/home/eduzen/storage
-export TMP=/home/eduzen/storage/tmp
-export CONFIGS=/home/eduzen/dockers/configs
-export DOWNLOADS=/home/eduzen/storage/media-center/downloads
-export COMPLETED=/home/eduzen/storage/media-center/completed
-export MUSIC=/home/eduzen/storage/media-center/completed/music
-export MOVIES=/home/eduzen/storage/media-center/completed/movies
-export TV=/home/eduzen/storage/media-center/completed/tv
-export BOOKS=/home/eduzen/storage/media-center/completed/books
+
+export STORAGE=$"HOME"/storage
+export TMP="$STORAGE"/tmp
+export DOWNLOADS="$STORAGE"/media-center/downloads
+export COMPLETED="$STORAGE"/media-center/completed
+export MUSIC="$STORAGE"/media-center/completed/music
+export MOVIES="$STORAGE"/media-center/completed/movies
+export TV="$STORAGE"/media-center/completed/tv
+export BOOKS="$STORAGE"/media-center/completed/books
+
 export TZ="Europe/Amsterdam"
 export UMASK=022
-export SAMBAPASS=marl33n!
-export PUID=1000
-export PGID=1000
+export SAMBAPASS=
+export PUID=
+export PGID=
