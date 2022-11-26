@@ -1,9 +1,9 @@
 [alias]
-	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-	type = cat-file -t
-	dump = cat-file -p
-	unstage = reset HEAD --
-	last = log -1 HEAD
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    type = cat-file -t
+    dump = cat-file -p
+    unstage = reset HEAD --
+    last = log -1 HEAD
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [color]
@@ -12,15 +12,15 @@
     interactive = auto
     status = auto
 [user]
-	name = Eduardo Enriquez (eduzen)
-	email = eduardo.a.enriquez@gmail.com
+    name = Eduardo Enriquez (eduzen)
+    email = eduardo.a.enriquez@gmail.com
 [core]
-	editor = vim
+    editor = vim
 [pull]
-	rebase = false
+    rebase = false
 [merge]
-	tool = vimdiff
+    tool = vimdiff
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [pager]
     branch = false

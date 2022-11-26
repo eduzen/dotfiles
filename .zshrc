@@ -57,4 +57,3 @@ if [[ -f "$HOME/.pyenv/version" ]]; then
     eval "$(pyenv virtualenv-init -)"
     export PATH="$PYENV_ROOT/bin:$PATH"
 fi
-
