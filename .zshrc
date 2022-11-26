@@ -14,7 +14,6 @@ plugins=(
   git
   pip
   rust
-  just
   pyenv
   python
   kubectl
@@ -28,6 +27,14 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# Brew
+if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]];
+then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+else
+    eval $(/opt/homebrew/bin/brew shellenv)
+fi
 
 # Enviroment Variables
 [ -f "$HOME"/.cargo/env ] && source "$HOME"/.cargo/env
@@ -44,14 +51,10 @@ source $ZSH/oh-my-zsh.sh
 [ -f "$HOME"/.just.zsh ] && source "$HOME"/.just.zsh
 [ -f /usr/local/bin/stern ] && source <(stern --completion=zsh)
 
-
-export PYENV_ROOT="$HOME/.pyenv"
-if [[ -f $PYENV_ROOT ]]; then
+if [[ -f "$HOME/.pyenv/version" ]]; then
+    export PYENV_ROOT="$HOME/.pyenv"
     eval "$(pyenv init --path)"
     eval "$(pyenv virtualenv-init -)"
     export PATH="$PYENV_ROOT/bin:$PATH"
-if
+fi
 
-if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]] then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-if

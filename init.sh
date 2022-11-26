@@ -7,6 +7,8 @@ if [[ $unamestr == 'Linux' ]]; then
   platform='linux'
 elif [[ $unamestr == 'FreeBSD' ]]; then
   platform='mac'
+elif [[ $unamestr == 'Darwin' ]]; then
+  platform='mac'
 fi
 
 echo
@@ -52,14 +54,9 @@ if [[ ${platform} == 'linux' ]]; then
     httpie
 fi
 
-if [[ ${platform} == 'mac' ]]; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    brew install p7zip
-fi
-
 
 echo
-read -p "Do you want to configure ohmyzsh? " -n 1 -r
+read -p "Do you want to configure ohmyzsh? [y/N]" -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -68,17 +65,21 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
 fi
 
-
 echo
-read -p "Do you want to configure brew? " -n 1 -r
+read -p "Do you want to configure brew? [y/N]" -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+if [[ -f /opt/homebrew/bin/brew ]] ; then
+    echo "Installing with brew..."
+    brew install p7zip
+fi
+
 echo
-read -p "Do you want to configure vim? " -n 1 -r
+read -p "Do you want to configure vim? [y/N]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   FILE=$HOME/.vimrc
@@ -88,7 +89,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 echo
-read -p "Do you want to configure cargo/just? " -n 1 -r
+read -p "Do you want to configure cargo/just? [y/N]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   FILE=$HOME/.cargo/env
@@ -100,7 +101,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 echo
-read -p "Do you want to configure pyenv? " -n 1 -r
+read -p "Do you want to configure pyenv? [y/N]" -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -118,16 +119,24 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     git clone https://github.com/pyenv/pyenv-virtualenv.git "$(pyenv root)"/plugins/pyenv-virtualenv
   fi
 
-  pyenv install 3.10.8
+  pyenv install 3.11.0
 
-  pyenv global 3.10.8
+  pyenv global 3.11.0
+fi
 
+
+echo
+cat requirements.txt
+read -p "Do you want to install these python libs? [y/N]" -n 1 -r
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
   python -m pip install -U pip wheel
   python -m pip install -r "$HOME"/requirements.txt
 fi
 
 echo
-read -p "Do you want to configure ufw/firewall? " -n 1 -r
+read -p "Do you want to configure ufw/firewall? [y/N]" -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -141,7 +150,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 echo
-read -p "Do you want to configure fzf? " -n 1 -r
+read -p "Do you want to configure fzf? [y/N]" -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -149,10 +158,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   ~/.fzf/install
 fi
 
-
-
 echo
-read -p "Do you want to configure bitwarden? " -n 1 -r
+read -p "Do you want to configure bitwarden? [y/N]" -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then

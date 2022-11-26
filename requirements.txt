@@ -4,5 +4,5 @@ isort
 pre-commit
 pylint
 pynvim
-subliminal
-youtube-dl
+subliminal  # For dowloading subtitles
+youtube-dl  # For dowloading youtube videos
