@@ -27,14 +27,14 @@ plugins=(
   zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH"/oh-my-zsh.sh
 
 # Brew
 if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]];
 then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 else
-    eval $(/opt/homebrew/bin/brew shellenv)
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Enviroment Variables

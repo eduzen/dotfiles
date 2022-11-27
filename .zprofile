@@ -13,6 +13,7 @@ if [ -f "$HOME"/.pyenv/version ]; then
     export PYENV_ROOT="$HOME"/.pyenv
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
 fi
 
 if [ -f /usr/bin/byobu-launch ]; then

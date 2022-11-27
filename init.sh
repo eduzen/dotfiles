@@ -15,7 +15,29 @@ echo
 echo "### We are on ${platform}"
 echo
 
-if [[ ${platform} == 'linux' ]]; then
+echo
+read -p "Do you want to configure ohmyzsh? [y/N]" -n 1 -r
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  git clone "https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+  git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+fi
+
+echo
+read -p "Do you want to configure brew? [y/N]" -n 1 -r
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+echo
+read -p "Do you want to configure update the system? [y/N]" -n 1 -r
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]] && [[ ${platform} == 'linux' ]]; then
   sudo apt-get update && sudo apt-get upgrade -f
 
   sudo apt install \
@@ -54,36 +76,44 @@ if [[ ${platform} == 'linux' ]]; then
     httpie
 fi
 
-echo
-read -p "Do you want to configure ohmyzsh? [y/N]" -n 1 -r
-echo
-
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  git clone "https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
-  git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
-fi
-
-echo
-read -p "Do you want to configure brew? [y/N]" -n 1 -r
-echo
-
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
-if [[ -f /opt/homebrew/bin/brew ]]; then
+if [[ $REPLY =~ ^[Yy]$ ]] && [[ -f /opt/homebrew/bin/brew ]]; then
   echo "Installing with brew..."
-  brew install p7zip
+  brew update
+  brew upgrade
+  brew install p7zip \
+    lazygit \
+    pyenv \
+    libpq \
+    neovim \
+    just \
+    nmap \
+    httpie \
+    jq \
+    rectangle \
+    alt-tab \
+    vim \
+    fzf \
+    ripgrep \
+    curl \
+    ack \
+    ctags \
+    zlib \
+    tcl-tk \
+    sqlite3 \
+    openssl \
+    wget
 fi
 
 echo
 read -p "Do you want to configure vim? [y/N]" -n 1 -r
 echo
+
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   FILE=$HOME/.vimrc
   if [ ! -f "$FILE" ]; then
     wget "https://raw.githubusercontent.com/fisadev/fisa-vim-config/v12.0.1/config.vim" -O .vimrc
+
+    echo "Please open vim after this script is finished!"
   fi
 fi
 
@@ -130,7 +160,7 @@ echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   python -m pip install -U pip wheel
-  python -m pip install -r "$HOME"/requirements.txt
+  python -m pip install -U -r "$HOME"/requirements.txt
 fi
 
 echo
