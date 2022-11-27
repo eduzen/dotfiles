@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-platform='unknown'
+PLATFORM='unknown'
 unamestr=$(uname)
 
 if [[ $unamestr == 'Linux' ]]; then
-  platform='linux'
+  PLATFORM='linux'
 elif [[ $unamestr == 'FreeBSD' ]]; then
-  platform='mac'
+  PLATFORM='macos'
 elif [[ $unamestr == 'Darwin' ]]; then
-  platform='mac'
+  PLATFORM='macos'
 fi
 
 echo
-echo "### We are on ${platform}"
+echo "### We are on ${PLATFORM}"
 echo
 
 echo
@@ -37,7 +37,7 @@ echo
 read -p "Do you want to configure update the system? [y/N]" -n 1 -r
 echo
 
-if [[ $REPLY =~ ^[Yy]$ ]] && [[ ${platform} == 'linux' ]]; then
+if [[ $REPLY =~ ^[Yy]$ ]] && [[ ${PLATFORM} == 'linux' ]]; then
   sudo apt-get update && sudo apt-get upgrade -f
 
   sudo apt install \
@@ -191,6 +191,11 @@ read -p "Do you want to configure bitwarden? [y/N]" -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  curl -L -o "$HOME/Downloads/bw.zip" "https://vault.bitwarden.com/download/?app=cli&platform=macos"
-  chmod +x /tmp/wb
+  curl -L "https://vault.bitwarden.com/download/?app=cli&platform=$PLATFORM" --output bw.zip
+  unzip bw.zip bw
+  if [[ platform == 'linux']]; then
+    sudo install bw /usr/local/bin/
+  fi
+  rm bw.zip
+
 fi
