@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 unamestr=$(uname)
 
 if [ "$unamestr" == 'Linux' ]; then
