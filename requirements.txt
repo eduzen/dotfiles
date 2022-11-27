@@ -1,9 +1,9 @@
 black
 flake8
 isort
+neovim
 pre-commit
 pylint
 pynvim
-neovim
 subliminal  # For dowloading subtitles
 youtube-dl  # For dowloading youtube videos

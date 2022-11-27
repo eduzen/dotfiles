@@ -3,6 +3,7 @@ set positional-arguments
 clean-python:
   #!/usr/bin/env python3
   import pathlib
+  print("Cleaning *.py[co]")
   current_path = pathlib.Path(".").parent
   [p.unlink() for p in current_path.rglob('*.py[co]')]
   [p.rmdir() for p in current_path.rglob('__pycache__')]

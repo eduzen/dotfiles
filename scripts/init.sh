@@ -126,6 +126,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   if [ ! -f "$FILE" ]; then
     curl https://sh.rustup.rs -sSf | sh
     cargo install just
+    just -f "$HOME".global.justfile --completions zsh > .oh-my-zsh/custom/plugins/just/_just
   fi
 fi
 
@@ -193,7 +194,7 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   curl -L "https://vault.bitwarden.com/download/?app=cli&platform=$PLATFORM" --output bw.zip
   unzip bw.zip bw
-  if [[ platform == 'linux']]; then
+  if [[ platform == 'linux' ]]; then
     sudo install bw /usr/local/bin/
   fi
   rm bw.zip

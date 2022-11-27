@@ -1,3 +1,4 @@
+alias j=just
 alias ,j="just --justfile ~/.global.justfile --working-directory $HOME"
 alias ,cleanpython="just clean-python"
 alias ,cleanpyc="find . -name '*.pyc' -exec rm -f {} \;"
