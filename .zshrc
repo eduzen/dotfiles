@@ -37,20 +37,28 @@ else
 fi
 
 # Enviroment Variables
-[ -f "$HOME"/.cargo/env ] && source "$HOME"/.cargo/env
-[ -f "$HOME"/.zsh_env ] && source "$HOME"/.zsh_env
-[ -f "$HOME"/.zsh_work_env ] && source "$HOME"/.zsh_work_env
+[[ -f "$HOME"/.env ]] && source "$HOME"/.env
+[[ -f "$HOME"/.extras ]] && source "$HOME"/.extras
 
 # Aliases
-[ -f "$HOME"/.bash_aliases ] && source "$HOME"/.bash_aliases
-[ -f "$HOME"/.zsh_aliases ] && source "$HOME"/.zsh_aliases
-[ -f "$HOME"/.zsh_work_aliases ] && source "$HOME"/.zsh_work_aliases
-[ -f "$HOME"/.zshaliases ] && source "$HOME"/.zshaliases
+[[ -f "$HOME"/.aliases ]] && source "$HOME"/.aliases
 
-[ -f "$HOME"/.fzf.zsh ] && source "$HOME"/.fzf.zsh
-[ -f "$HOME"/.just.zsh ] && source "$HOME"/.just.zsh
-[ -f /usr/local/bin/stern ] && source <(stern --completion=zsh)
+# Rust curl https://sh.rustup.rs -sSf | sh
+[[ -f "$HOME"/.cargo/env ]] && source "$HOME"/.cargo/env
+[[ -f "$HOME"/.just.zsh ]] && source "$HOME"/.just.zsh
 
+# GOLANG
+[[ -f /usr/local/go/bin ]] && export PATH=$PATH:/usr/local/go/bin
+
+# FuzzyFinder https://github.com/junegunn/fzf
+[[ -f "$HOME"/.fzf.zsh ]] && source "$HOME"/.fzf.zsh
+
+# Kubernetes
+[[ -f "$HOME"/.kube/config ]] && export KUBECONFIG="$HOME"/.kube/config
+[[ -f "$HOME"/.krew/receipts/krew.yaml ]] && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+[[ -f /usr/local/bin/stern ]] && source <(stern --completion=zsh)
+
+# Pyenv https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv
 if [[ -f "$HOME/.pyenv/version" ]]; then
     export PYENV_ROOT="$HOME/.pyenv"
     eval "$(pyenv init --path)"
