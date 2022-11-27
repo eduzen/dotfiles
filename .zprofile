@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 unamestr=$(uname)
 
 if [[ $unamestr == 'Linux' ]]; then
@@ -8,11 +9,12 @@ elif [[ $unamestr == 'Darwin' ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-if [[ -f "$HOME"/.pyenv/version ]] then
+if [[ -f "$HOME"/.pyenv/version ]]; then
     export PYENV_ROOT="$HOME"/.pyenv
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
 
-
-_byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
+if [[ -f /usr/bin/byobu-launch ]]; then
+  _byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
+fi

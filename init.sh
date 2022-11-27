@@ -54,7 +54,6 @@ if [[ ${platform} == 'linux' ]]; then
     httpie
 fi
 
-
 echo
 read -p "Do you want to configure ohmyzsh? [y/N]" -n 1 -r
 echo
@@ -73,9 +72,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-if [[ -f /opt/homebrew/bin/brew ]] ; then
-    echo "Installing with brew..."
-    brew install p7zip
+if [[ -f /opt/homebrew/bin/brew ]]; then
+  echo "Installing with brew..."
+  brew install p7zip
 fi
 
 echo
@@ -124,7 +123,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   pyenv global 3.11.0
 fi
 
-
 echo
 cat requirements.txt
 read -p "Do you want to install these python libs? [y/N]" -n 1 -r
@@ -163,7 +161,6 @@ read -p "Do you want to configure bitwarden? [y/N]" -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    curl -L -o "$HOME/Downloads/bw.zip" "https://vault.bitwarden.com/download/?app=cli&platform=macos"
-    chmod +x /tmp/wb
-    mv /tmp/wb
+  curl -L -o "$HOME/Downloads/bw.zip" "https://vault.bitwarden.com/download/?app=cli&platform=macos"
+  chmod +x /tmp/wb
 fi
