@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 unamestr=$(uname)
 
-if [ "$unamestr" == 'Linux' ]; then
+if [[ "$unamestr" == 'Linux' ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-elif [ "$unamestr" == 'FreeBSD' ]; then
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [ "$unamestr" == 'Darwin' ]; then
+elif [[ "$unamestr" == 'Darwin' ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-if [ -f "$HOME"/.pyenv/version ]; then
+if [[ -f "$HOME"/.pyenv/version ]]; then
     export PYENV_ROOT="$HOME"/.pyenv
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
 
-if [ -f /usr/bin/byobu-launch ]; then
+if [[ -f /usr/bin/byobu-launch ]]; then
   _byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
 fi
