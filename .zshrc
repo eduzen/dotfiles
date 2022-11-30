@@ -78,4 +78,7 @@ if [[ -f "$HOME"/.pyenv/version ]]; then
     eval "$(pyenv init --path)"
     eval "$(pyenv virtualenv-init -)"
     export PATH="$PYENV_ROOT/bin:$PATH"
+    if [[ -f "/opt/homebrew/bin/brew" ]]; then
+        alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+    fi
 fi
