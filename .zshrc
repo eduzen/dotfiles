@@ -80,3 +80,7 @@ if [[ -f "$HOME"/.pyenv/version ]]; then
         alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
     fi
 fi
+
+[[ -f /usr/local/go/bin ]] && export PATH=$PATH:/usr/local/go/bin
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
