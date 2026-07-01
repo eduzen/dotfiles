@@ -1,0 +1,36 @@
+# shellcheck shell=bash
+# Login shell setup managed by chezmoi.
+
+_path_prepend() {
+  [[ -d "$1" ]] || return 0
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) export PATH="$1:$PATH" ;;
+  esac
+}
+
+_setup_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    eval "$(brew shellenv)"
+    return 0
+  fi
+
+  for brew_binary in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+    if [[ -x "$brew_binary" ]]; then
+      eval "$("$brew_binary" shellenv)"
+      return 0
+    fi
+  done
+}
+
+_path_prepend "$HOME/.local/bin"
+_path_prepend "$HOME/bin"
+_setup_brew
+
+if [[ -d "$HOME/.pyenv" ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  _path_prepend "$PYENV_ROOT/bin"
+  command -v pyenv >/dev/null 2>&1 && eval "$(pyenv init --path)"
+fi
+
+unset -f _path_prepend _setup_brew

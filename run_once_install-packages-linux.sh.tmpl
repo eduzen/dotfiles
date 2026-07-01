@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+case "{{ .chezmoi.os }}" in
+  linux) ;;
+  *) exit 0 ;;
+esac
+
+if ! command -v apt-get >/dev/null 2>&1; then
+  echo "This Linux installer supports apt-based Ubuntu and Raspberry Pi OS hosts only." >&2
+  exit 1
+fi
+
+sudo apt-get update
+sudo apt-get install -y \
+  zsh \
+  tmux \
+  git \
+  curl \
+  ca-certificates \
+  fzf \
+  ripgrep \
+  fd-find \
+  bat \
+  shellcheck
+
+install_apt_if_available() {
+  local available=()
+  local missing=()
+  local package
+
+  for package in "$@"; do
+    if apt-cache show "$package" >/dev/null 2>&1; then
+      available+=("$package")
+    else
+      missing+=("$package")
+    fi
+  done
+
+  if ((${#available[@]})); then
+    sudo apt-get install -y "${available[@]}"
+  fi
+
+  if ((${#missing[@]})); then
+    printf 'Apt packages unavailable on this host: %s\n' "${missing[*]}" >&2
+  fi
+}
+
+install_apt_if_available \
+  just \
+  eza \
+  zoxide \
+  git-delta \
+  bottom \
+  du-dust \
+  procs
+
+if ! command -v starship >/dev/null 2>&1; then
+  curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+fi
+
+missing_commands=()
+for command_name in just eza zoxide delta btm dust procs; do
+  if ! command -v "$command_name" >/dev/null 2>&1; then
+    missing_commands+=("$command_name")
+  fi
+done
+
+if ((${#missing_commands[@]})); then
+  if [[ "${INSTALL_RUSTUP:-0}" == "1" ]]; then
+    if ! command -v cargo >/dev/null 2>&1; then
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      # shellcheck disable=SC1091
+      source "$HOME/.cargo/env"
+    fi
+    cargo install just eza zoxide git-delta bottom du-dust procs
+  else
+    printf 'Missing modern CLI commands: %s\n' "${missing_commands[*]}" >&2
+    echo 'Re-run with INSTALL_RUSTUP=1 to install missing Rust-based tools through cargo.' >&2
+  fi
+fi
