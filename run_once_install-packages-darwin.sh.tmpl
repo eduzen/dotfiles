@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+case "{{ .chezmoi.os }}" in
+  darwin) ;;
+  *) exit 0 ;;
+esac
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrew is required before macOS package installation." >&2
+  echo 'Install it with: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"' >&2
+  exit 1
+fi
+
+brew update
+brew install \
+  chezmoi \
+  tmux \
+  starship \
+  zsh \
+  eza \
+  bat \
+  ripgrep \
+  fd \
+  fzf \
+  zoxide \
+  bottom \
+  dust \
+  procs \
+  git-delta \
+  just \
+  shellcheck
+
+brew install --cask \
+  ghostty \
+  font-jetbrains-mono-nerd-font
+
+if [[ "${INSTALL_RUSTUP:-0}" == "1" ]] && ! command -v rustup >/dev/null 2>&1; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi

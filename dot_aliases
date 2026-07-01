@@ -1,0 +1,35 @@
+# shellcheck shell=bash
+
+alias j='just'
+alias ,j='just --justfile "$HOME/.global.justfile" --working-directory "$HOME"'
+alias ,cleanpython='just clean-python'
+alias ,cleanpyc="find . -name '*.pyc' -exec rm -f {} \;"
+alias ,cleanpyco="find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete"
+alias ,cleanpycache="find . -regex '^.*\(__pycache__\|\.py[co]\)$' -delete"
+alias ,freedanglingimg='docker rmi -f $(docker images -f "dangling=true" -q)'
+
+alias ,vim='docker run -it --rm -v "$(pwd)":/src --workdir /src eduzen/docker-vim:latest'
+alias ,lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME/.config/lazydocker":/.config/jesseduffield/lazydocker lazyteam/lazydocker:latest'
+alias ,lazydocker='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME/.config/lazydocker":/.config/jesseduffield/lazydocker lazyteam/lazydocker:latest'
+alias ,portainer='docker volume create portainer_data; docker run --rm -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce'
+
+if command -v eza >/dev/null 2>&1; then
+  alias ll='eza -lah --icons'
+else
+  alias ll='ls -lah'
+fi
+
+if command -v bat >/dev/null 2>&1; then
+  alias cat='bat'
+elif command -v batcat >/dev/null 2>&1; then
+  alias bat='batcat'
+  alias cat='batcat'
+fi
+
+if command -v rg >/dev/null 2>&1; then
+  alias grep='rg'
+fi
+
+if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
+  alias fd='fdfind'
+fi

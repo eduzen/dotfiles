@@ -1,0 +1,48 @@
+add_newline = true
+format = """
+$directory\
+$git_branch\
+$git_status\
+$python\
+$nodejs\
+$rust\
+$docker_context\
+$kubernetes\
+$package\
+$cmd_duration\
+$line_break\
+$character"""
+
+[directory]
+truncation_length = 3
+truncate_to_repo = false
+
+[git_branch]
+symbol = " "
+
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+
+[python]
+symbol = "py "
+
+[nodejs]
+symbol = "node "
+
+[rust]
+symbol = "rs "
+
+[docker_context]
+symbol = "docker "
+
+[kubernetes]
+disabled = false
+symbol = "k8s "
+format = "[$symbol$context( \\($namespace\\))]($style) "
+
+[package]
+symbol = "pkg "
+
+[cmd_duration]
+min_time = 1000
+format = "took [$duration]($style) "

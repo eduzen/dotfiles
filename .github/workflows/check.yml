@@ -1,0 +1,57 @@
+name: Check
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install check tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck zsh
+          mkdir -p "$HOME/.local/bin"
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - uses: pre-commit/action@v3.0.1
+
+      - name: ShellCheck installer templates
+        run: shellcheck --severity=error run_once_*.sh.tmpl
+
+      - name: Parse zsh files
+        run: zsh -n dot_zprofile dot_zshrc dot_aliases dot_aliases_private.tmpl
+
+      - name: Check chezmoi render and verify
+        run: |
+          tmp_home="$(mktemp -d)"
+          chezmoi --source "$GITHUB_WORKSPACE" --destination "$tmp_home" --dry-run --verbose apply --exclude=scripts
+          test ! -e "$tmp_home/.zshrc"
+          chezmoi --source "$GITHUB_WORKSPACE" --destination "$tmp_home" apply --exclude=scripts --force
+          test -f "$tmp_home/.zshrc"
+          test -f "$tmp_home/.zprofile"
+          test -f "$tmp_home/.aliases"
+          test -f "$tmp_home/.tmux.conf"
+          test -f "$tmp_home/.config/starship.toml"
+          test -f "$tmp_home/.env"
+          if stat -c "%a" "$tmp_home/.env" >/tmp/env_mode; then
+            test "$(cat /tmp/env_mode)" = "600"
+          fi
+          chezmoi --source "$GITHUB_WORKSPACE" --destination "$tmp_home" verify --exclude=scripts
+
+      - name: Smoke zsh startup in generated home
+        run: |
+          tmp_home="$(mktemp -d)"
+          chezmoi --source "$GITHUB_WORKSPACE" --destination "$tmp_home" apply --exclude=scripts --force
+          HOME="$tmp_home" ZDOTDIR="$tmp_home" zsh -f -c 'source "$ZDOTDIR/.zprofile"; source "$ZDOTDIR/.zshrc"; alias j; alias ll'

@@ -1,19 +1,9 @@
-alias j=just
-alias ,j="just --justfile ~/.global.justfile --working-directory $HOME"
-alias ,cleanpython="just clean-python"
-alias ,cleanpyc="find . -name '*.pyc' -exec rm -f {} \;"
-alias ,cleanpyco="find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete"
-alias ,cleanpycache="find . -regex '^.*\(__pycache__\|\.py[co]\)$' -delete"
-alias ,freedanglingimg='docker rmi -f $(docker images -f "dangling=true" -q)'
+# shellcheck shell=bash
+# Host/local aliases. Secrets stay in ~/.env or the ambient environment.
 
 alias ,mountcompleted='sudo mount -v -t cifs //pi4.lan/completed ${COMPLETED} -o user=${USER},password=${SAMBAPASS},domain=lan,uid=1000,gid=1000'
 alias ,mountdownloads='sudo mount -v -t cifs //pi4.lan/downloads ${DOWNLOADS} -o user=${USER},password=${SAMBAPASS},domain=lan,uid=1000,gid=1000'
 alias ,mountblackhole='sudo mount -v -t cifs //pi4.lan/blackhole ${DOWNLOADS}/blackhole -o user=${USER},password=${SAMBAPASS},domain=lan,uid=1000,gid=1000'
-
-alias ,vim='docker run -it --rm -v $(pwd):/src --workdir /src eduzen/docker-vim:latest'
-alias ,lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker:latest'
-alias ,lazydocker='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker:latest'
-alias ,portainer="docker volume create portainer_data;docker run --rm -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce"
 
 alias ,bazarr='dco -f ~/dockers/bazarr/docker-compose.yml'
 alias ,jackett='dco -f ~/dockers/jackett/docker-compose.yml'
